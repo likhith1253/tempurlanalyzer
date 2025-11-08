@@ -1,0 +1,37 @@
+package com.sentinelai.guard.security;
+
+import com.sentinelai.guard.model.UserRole;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+@Component
+public class SecurityUtils {
+
+    public static String getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            return ((UserDetails) authentication.getPrincipal()).getUsername();
+        }
+        return null;
+    }
+
+    public static boolean hasRole(UserRole role) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getAuthorities() != null) {
+            return authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(auth -> auth.equals("ROLE_" + role.name()));
+        }
+        return false;
+    }
+
+    public static boolean isAdmin() {
+        return hasRole(UserRole.ADMIN);
+    }
+}

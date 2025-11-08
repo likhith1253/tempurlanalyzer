@@ -1,0 +1,56 @@
+ip_prefix,country,city
+45.142.120,RU,Moscow
+185.220.101,DE,Frankfurt
+91.219.236,RU,St Petersburg
+89.248.165,RU,Novosibirsk
+193.239.147,NL,Amsterdam
+104.244.42,US,Los Angeles
+167.94.138,US,New York
+198.98.54,US,Chicago
+51.89.115,FR,Paris
+178.62.193,UK,London
+195.123.220,PL,Warsaw
+46.101.126,DE,Berlin
+159.89.214,US,San Francisco
+209.141.45,US,Dallas
+142.93.125,CA,Toronto
+188.166.89,SG,Singapore
+139.59.10,IN,Bangalore
+103.253.145,CN,Beijing
+221.194.47,CN,Shanghai
+125.214.87,KR,Seoul
+210.15.142,JP,Tokyo
+114.119.136,CN,Shenzhen
+180.163.220,CN,Hangzhou
+203.113.162,TH,Bangkok
+118.107.243,VN,Hanoi
+49.156.23,IN,Mumbai
+122.161.93,IN,Delhi
+182.73.214,IN,Hyderabad
+202.47.38,AU,Sydney
+103.28.121,AU,Melbourne
+41.60.234,ZA,Johannesburg
+105.112.33,ZA,Cape Town
+197.234.221,NG,Lagos
+196.201.214,EG,Cairo
+200.98.133,BR,Sao Paulo
+186.148.172,BR,Rio de Janeiro
+190.14.36,AR,Buenos Aires
+187.188.165,MX,Mexico City
+177.54.148,BR,Brasilia
+201.216.243,CL,Santiago
+85.132.6,ES,Madrid
+95.216.145,FI,Helsinki
+217.12.210,SE,Stockholm
+80.94.92,NO,Oslo
+213.108.105,IT,Rome
+151.236.219,IT,Milan
+77.37.160,CH,Zurich
+87.230.14,AT,Vienna
+78.142.19,RO,Bucharest
+212.58.244,TR,Istanbul
+31.145.191,UA,Kyiv
+93.170.122,GR,Athens
+192.168.1,US,Private Network
+10.0.0,US,Private Network
+172.16.5,US,Private Network

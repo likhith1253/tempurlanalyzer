@@ -1,0 +1,76 @@
+services:
+  # Backend Service
+  backend:
+    build:
+      context: ./backend-java
+      dockerfile: Dockerfile
+    container_name: sentinel-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sentinel
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - MAVEN_OPTS=-Dmaven.repo.remote=https://repo1.maven.org/maven2/
+      # Add other environment variables as needed
+    depends_on:
+      - db
+    networks:
+      - sentinel-network
+
+  # Database Service (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: sentinel-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=sentinel
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - sentinel-network
+
+  # Proxy Service
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    container_name: sentinel-proxy
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - BACKEND_URL=http://backend:8080/analyze/url
+    volumes:
+      - proxy_data:/data
+    depends_on:
+      - backend
+    networks:
+      - sentinel-network
+
+  # Frontend Service (if needed, otherwise deploy separately to Vercel/Firebase)
+  # frontend:
+  #   build:
+  #     context: ./sentinelai-dashboard
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NEXT_PUBLIC_API_URL=http://localhost:8080
+  #   depends_on:
+  #     - backend
+
+# Networks
+networks:
+  sentinel-network:
+    driver: bridge
+
+# Volumes for persistent data
+volumes:
+  postgres_data:
+  proxy_data:

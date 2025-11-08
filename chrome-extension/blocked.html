@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Access Blocked - Sentinel Web Guard</title>
+  <style>
+    :root {
+      --primary-color: #4a6bdf;
+      --danger-color: #e74c3c;
+      --bg-color: #f9f9f9;
+      --text-color: #333;
+      --text-light: #777;
+      --border-color: #e0e0e0;
+      --card-bg: #fff;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .header {
+      background-color: var(--danger-color);
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    .blocked-url {
+      background-color: #fff8f8;
+      border-left: 4px solid var(--danger-color);
+      padding: 16px;
+      margin: 16px 0;
+      word-break: break-all;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    .reason {
+      background-color: #f8f9fa;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .reason h3 {
+      color: var(--danger-color);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #3a5bd9;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: #f0f0f0;
+      color: var(--text-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #e0e0e0;
+      transform: translateY(-1px);
+    }
+
+    .footer {
+      margin-top: 32px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .logo img {
+      height: 48px;
+      width: auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .content {
+        padding: 20px;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="white"/>
+          <path d="M12 7C11.45 7 11 7.45 11 8V13C11 13.55 11.45 14 12 14C12.55 14 13 13.55 13 13V8C13 7.45 12.55 7 12 7ZM13 17C13 16.45 12.55 16 12 16C11.45 16 11 16.45 11 17C11 17.55 11.45 18 12 18C12.55 18 13 17.55 13 17Z" fill="white"/>
+        </svg>
+      </div>
+      <h1>Access Blocked</h1>
+      <p>Sentinel Web Guard has prevented access to this website</p>
+    </div>
+    
+    <div class="content">
+      <p>Your request was blocked because the website may contain security threats or malicious content.</p>
+      
+      <div class="blocked-url" id="blocked-url">
+        Loading URL...
+      </div>
+      
+      <div class="reason">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="#e74c3c"/>
+            <path d="M12 7C11.45 7 11 7.45 11 8V13C11 13.55 11.45 14 12 14C12.55 14 13 13.55 13 13V8C13 7.45 12.55 7 12 7ZM13 17C13 16.45 12.55 16 12 16C11.45 16 11 16.45 11 17C11 17.55 11.45 18 12 18C12.55 18 13 17.55 13 17Z" fill="#e74c3c"/>
+          </svg>
+          Reason
+        </h3>
+        <p id="blocked-reason">This website has been flagged as potentially dangerous based on our security analysis.</p>
+      </div>
+      
+      <div class="actions">
+        <button id="back-btn" class="btn btn-primary">Go Back to Safety</button>
+        <button id="proceed-btn" class="btn btn-secondary">I Understand the Risks (Not Recommended)</button>
+      </div>
+      
+      <div class="footer">
+        <p>Sentinel Web Guard is protecting your online security.</p>
+        <p>Block ID: <span id="block-id">N/A</span> • <span id="timestamp"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const blockedUrl = urlParams.get('url') || 'Unknown URL';
+    const source = urlParams.get('source') || 'security analysis';
+    
+    // Update the page with the blocked URL and reason
+    document.getElementById('blocked-url').textContent = decodeURIComponent(blockedUrl);
+    document.getElementById('blocked-reason').textContent = 
+      `This website has been flagged by ${source} as potentially dangerous.`;
+    
+    // Generate a random block ID
+    document.getElementById('block-id').textContent = 
+      'BLK-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+    
+    // Set current timestamp
+    const now = new Date();
+    document.getElementById('timestamp').textContent = now.toLocaleString();
+    
+    // Button event listeners
+    document.getElementById('back-btn').addEventListener('click', () => {
+      window.history.back();
+    });
+    
+    document.getElementById('proceed-btn').addEventListener('click', () => {
+      // Store user's decision to bypass for this session
+      sessionStorage.setItem(`bypass_${btoa(blockedUrl)}`, 'true');
+      window.location.href = blockedUrl;
+    });
+    
+    // Check if user has already bypassed this URL in the current session
+    if (sessionStorage.getItem(`bypass_${btoa(blockedUrl)}`) === 'true') {
+      window.location.href = blockedUrl;
+    }
+  </script>
+</body>
+</html>

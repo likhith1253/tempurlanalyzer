@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sentinel Web Guard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Sentinel Web Guard</h1>
+      <div class="status">
+        <span class="status-dot"></span>
+        <span class="status-text">Active</span>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-button active" data-tab="blocked">Blocked Sites</button>
+      <button class="tab-button" data-tab="settings">Settings</button>
+    </div>
+
+    <div class="tab-content" id="blocked-tab">
+      <h2>Recently Blocked</h2>
+      <div id="blocked-list" class="blocked-list">
+        <div class="empty-state">No blocked websites yet</div>
+      </div>
+    </div>
+
+    <div class="tab-content hidden" id="settings-tab">
+      <div class="form-group">
+        <h3>Whitelist</h3>
+        <div class="input-group">
+          <input type="text" id="whitelist-input" placeholder="example.com or *.example.com">
+          <button id="add-whitelist">Add</button>
+        </div>
+        <div id="whitelist-items" class="list-items"></div>
+      </div>
+
+      <div class="form-group">
+        <h3>Blacklist</h3>
+        <div class="input-group">
+          <input type="text" id="blacklist-input" placeholder="example.com or *.example.com">
+          <button id="add-blacklist">Add</button>
+        </div>
+        <div id="blacklist-items" class="list-items"></div>
+      </div>
+
+      <div class="actions">
+        <button id="clear-cache" class="secondary">Clear Cache</button>
+      </div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

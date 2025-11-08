@@ -1,0 +1,73 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: sentinel-ai-guard
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:sentinelai;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    com.sentinelai.guard: DEBUG
+    org.springframework: INFO
+
+# Application specific properties
+sentinel:
+  security:
+    jwt:
+      secret: your-jwt-secret-key-here
+      expiration-ms: 86400000  # 24 hours
+  threat:
+    analysis:
+      risk-threshold: 0.7
+      max-concurrent-scans: 10
+  geoip:
+    database: classpath:geoip/GeoLite2-Country.mmdb
+
+# Firebase configuration (replace with your actual config)
+firebase:
+  database-url: https://your-project-id.firebaseio.com
+  credentials:
+    path: classpath:firebase-credentials.json
+
+# Actuator endpoints for monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+# Gemini Configuration
+sentinel.plugins.gemini.enabled=true
+sentinel.plugins.gemini.project-id=your-gcp-project-id
+sentinel.plugins.gemini.location=us-central1
+sentinel.plugins.gemini.model-name=gemini-pro

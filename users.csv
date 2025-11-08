@@ -1,0 +1,4 @@
+username,password,role,userId
+admin,adminpass,ADMIN,ADM-01
+investigator,investigatorpass,INVESTIGATOR,INV-01
+auditor,auditorpass,AUDITOR,AUD-01
